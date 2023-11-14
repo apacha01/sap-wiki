@@ -3,9 +3,29 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="SAPI">
-	<main class="flex justify-center items-center">
-		<h1 class="inline text-6xl font-bold font-sap mt-6">
-			Welcome to the <span class="text-sap-yellow-500">SAPI</span> GUI
+	<main class="flex flex-col justify-center items-center max-w-[1000px]">
+		<h1 class="inline text-6xl font-bold font-sap mt-8">
+			<span class="text-sap-yellow-500">SAPI</span> GUI
 		</h1>
+
+		<!-- Hero Section -->
+		<section class="flex flex-col justify-center items-center mt-20 w-full">
+			<h2 class="text-4xl md:text-4xl font-bold mb-6 text-center">Welcome to the The Unofficial Super Auto Pets API GUI</h2>
+			<p class="text-xl">Credit to the
+				<a class="text-seagull-300 font-bold hover:underline hover:text-seagull-200 transition duration-300 ease-in-out"
+					href="https://superautopets.wiki.gg/wiki/Super_Auto_Pets_Wiki"
+				>
+					Super Auto Pets Wiki
+				</a>
+				where the info was taken from
+			</p>
+			<p class="text-xl">
+				Content information last updated: 28-10-2023
+			</p>
+
+			<div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+				<!-- Cards -->
+			</div>
+		</section>
 	</main>
 </Layout>
