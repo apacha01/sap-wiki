@@ -11,10 +11,10 @@ import Layout from '../layouts/Layout.astro';
 
 		<!-- Hero Section -->
 		<section class="flex flex-col justify-center items-center mt-20 w-full gap-4">
-			<h2 class="text-4xl md:text-4xl font-bold mb-6 text-center">Welcome to the The Unofficial Super Auto Pets API GUI</h2>
+			<h2 class="text-4xl md:text-4xl font-bold mb-6 text-center">Welcome to the Unofficial Super Auto Pets API GUI</h2>
 			<p class="text-xl">Credit to the
 				<a class="text-seagull-300 font-bold hover:underline hover:text-seagull-200 transition duration-300 ease-in-out"
-					href="https://superautopets.wiki.gg/wiki/Super_Auto_Pets_Wiki"
+					href="https://superautopets.wiki.gg/wiki/Super_Auto_Pets_Wiki" target="_blank"
 				>
 					Super Auto Pets Wiki
 				</a>
@@ -25,21 +25,31 @@ import Layout from '../layouts/Layout.astro';
 			</p>
 
 			<div class="w-full flex justify-evenly flex-wrap gap-8 mt-10">
-				<Card3D mainTitle='Pets' classes='w-40 h-20'>
-					<img src="https://raw.githubusercontent.com/apacha01/assets/sap/super-auto-pets/pets/standard/Ant.png" alt="SAP Ant" />
-				</Card3D>
-				<Card3D mainTitle='Tokens' classes='w-40 h-20'>
-					<img src="https://raw.githubusercontent.com/apacha01/assets/sap/super-auto-pets/tokens/standard/Bee.png" alt="SAP Bee" />
-				</Card3D>
-				<Card3D mainTitle='Foods' classes='w-40 h-20'>
-					<img src="https://raw.githubusercontent.com/apacha01/assets/sap/super-auto-pets/foods/standard/Apple.png" alt="SAP Bee" />
-				</Card3D>
-				<Card3D mainTitle='Toys' classes='w-40 h-20'>
-					<img src="https://raw.githubusercontent.com/apacha01/assets/sap/super-auto-pets/toys/standard/Ballon.png" alt="SAP Bee" />
-				</Card3D>
-				<Card3D mainTitle='Packs' classes='w-40 h-20'>
-					<img src="https://raw.githubusercontent.com/apacha01/assets/sap/super-auto-pets/pets/standard/Turtle.png" alt="SAP Bee" />
-				</Card3D>
+				<a href="/pets/">
+					<Card3D mainTitle='Pets' classes='w-40 h-20'>
+						<img src="https://raw.githubusercontent.com/apacha01/assets/sap/super-auto-pets/pets/standard/Ant.png" alt="SAP Ant" />
+					</Card3D>
+				</a>
+				<a href="/tokens/">
+					<Card3D mainTitle='Tokens' classes='w-40 h-20'>
+						<img src="https://raw.githubusercontent.com/apacha01/assets/sap/super-auto-pets/tokens/standard/Bee.png" alt="SAP Bee" />
+					</Card3D>
+				</a>
+				<a href="/foods/">
+					<Card3D mainTitle='Foods' classes='w-40 h-20'>
+						<img src="https://raw.githubusercontent.com/apacha01/assets/sap/super-auto-pets/foods/standard/Apple.png" alt="SAP Bee" />
+					</Card3D>
+				</a>
+				<a href="/toys/">
+					<Card3D mainTitle='Toys' classes='w-40 h-20'>
+						<img src="https://raw.githubusercontent.com/apacha01/assets/sap/super-auto-pets/toys/standard/Ballon.png" alt="SAP Bee" />
+					</Card3D>
+				</a>
+				<a href="/packs/">
+					<Card3D mainTitle='Packs' classes='w-40 h-20'>
+						<img src="https://raw.githubusercontent.com/apacha01/assets/sap/super-auto-pets/pets/standard/Turtle.png" alt="SAP Bee" />
+					</Card3D>
+				</a>
 			</div>
 		</section>
 	</main>
