@@ -1,0 +1,22 @@
+---
+interface Props {
+	items: { link: string; text: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="sticky top-0 z-[1000] w-full h-16 flex justify-between items-center px-8 py-4 rounded-br-lg rounded-bl-lg bg-white/5 backdrop-filter backdrop-blur-lg border-b border-seagull-800">
+	<slot />
+	<ul class="menu flex w-fit items-center justify-evenly gap-6">
+		{
+			items.map(item => (
+				<li class="text-lg hover:underline">
+					<a href={item.link}>
+						{item.text}
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</nav>
