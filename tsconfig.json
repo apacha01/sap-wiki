@@ -7,6 +7,9 @@
 			],
 			"@layouts/*": [
 				"src/layouts/*"
+			],
+			"@dtypes/*": [
+				"src/types/*"
 			]
 		}
 	},
