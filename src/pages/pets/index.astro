@@ -1,0 +1,27 @@
+---
+import Layout from '@layouts/Layout.astro';
+import type { Pet } from '@dtypes/pet.ts';
+import type { API } from '@dtypes/api.ts';
+import CardPet from '@components/CardPet.astro';
+import petsRes from '../../mocks/pets.json';
+
+// const res = (await fetch('https://sapi-kkff.onrender.com/api/v1/pets').then(res => res.json()).catch(console.error)) as API;
+
+// const pets = res.content as Pet[];
+const pets = petsRes as Pet[];
+let isError = false;
+
+// if (res.code !== 200) {
+// 	isError = true;
+// }
+---
+
+<Layout title="Pets">
+	<section class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-16">
+		{
+			isError
+				? 'There was an error' // ? res.code + res.message + res.description
+				: pets.map(pet => <CardPet pet={pet}></CardPet>)
+		}
+	</section>
+</Layout>
