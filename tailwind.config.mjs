@@ -8,6 +8,10 @@ export default {
 		fontFamily: {
 			'sap': ['sap']
 		},
+		backgroundImage: {
+			'atk': 'url(/imgs/25px-Attack_Icon.webp)',
+			'hp': 'url(/imgs/25px-Health_Icon.webp)'
+		},
 		colors: {
 			...colors,
 			'sap-yellow': {
