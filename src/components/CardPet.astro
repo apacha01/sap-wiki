@@ -6,15 +6,17 @@ interface Props {
 }
 
 const { pet } = Astro.props;
+
+// Transform snake_case to Normal Text
+const name = pet.name.replace(/_([a-z])/g, (_, match) => ` ${match.toUpperCase()}`).replace(/^[a-z]/, match => match.toUpperCase());
 ---
 
 <article class="w-56 h-48 m-auto px-6 py-3 flex flex-col gap-4 bg-fun-green-700 rounded-lg shadow-lg shadow-black">
 	<h2 class="w-full text-center text-3xl leading-7 font-sap font-bold py-1 border-b border-b-fun-green-900">
-		<!-- Transform snake_case to Normal Text -->
-		{pet.name.replace(/_([a-z])/g, (_, match) => ` ${match.toUpperCase()}`).replace(/^[a-z]/, match => match.toUpperCase())}
+		{name}
 	</h2>
 	<div class="flex justify-around items-center h-full">
-		<img class="h-[90px] object-contain" src={pet.sprites.standard} alt=`SAP ${pet.name} standard image`>
+		<img class="h-[90px] object-contain" src={pet.sprites.standard} alt=`SAP ${name} standard image` title={name}>
 		<div class="flex flex-col justify-around h-full">
 			{
 				pet.stats[0].name.localeCompare('hp') === 0
