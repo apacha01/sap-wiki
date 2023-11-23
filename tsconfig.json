@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"baseUrl": ".",
+		"baseUrl": "/home/apacha/Documents/sap-wiki",
 		"paths": {
 			"@components/*": [
 				"src/components/*"
@@ -11,7 +11,9 @@
 			"@dtypes/*": [
 				"src/types/*"
 			]
-		}
+		},
+		"jsx": "react-jsx",
+		"jsxImportSource": "preact"
 	},
 	"extends": "astro/tsconfigs/strict"
 }
