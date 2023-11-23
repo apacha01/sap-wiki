@@ -1,42 +1,83 @@
 ---
-import type { Pet } from '@dtypes/pet';
+import type { Sprites, Stat } from '@dtypes/pet';
 
 interface Props {
-	pet: Pet;
+	petName: string;
+	petSprites: Sprites;
+	petStats: Stat[];
 }
 
-const { pet } = Astro.props;
+const { petName, petSprites, petStats } = Astro.props;
 
 // Transform snake_case to Normal Text
-const name = pet.name.replace(/_([a-z])/g, (_, match) => ` ${match.toUpperCase()}`).replace(/^[a-z]/, match => match.toUpperCase());
+const name = petName.replace(/_([a-z])/g, (_, match) => ` ${match.toUpperCase()}`).replace(/^[a-z]/, match => match.toUpperCase());
+const { standard } = petSprites;
 ---
 
-<article class="w-56 h-48 m-auto px-6 py-3 flex flex-col gap-4 bg-fun-green-700 rounded-lg shadow-lg shadow-black">
+<article
+	class="card group w-56 h-48 m-auto px-6 py-3 flex flex-col gap-4 bg-fun-green-700 rounded-lg shadow-lg shadow-black
+	hover:z-[999] hover:scale-110 hover:shadow-2xl hover:shadow-black transition-[transform,shadow] ease-in-out"
+>
 	<h2 class="w-full text-center text-3xl leading-7 font-sap font-bold py-1 border-b border-b-fun-green-900">
 		{name}
 	</h2>
-	<div class="flex justify-around items-center h-full">
-		<img class="h-[90px] object-contain" src={pet.sprites.standard} alt=`SAP ${name} standard image` title={name}>
-		<div class="flex flex-col justify-around h-full">
+	<div class="w-full flex justify-center items-center gap-4">
+		<img class="h-[95px] object-contain" src={standard} alt=`SAP ${name} standard image` title={name}>
+		<section class="flex flex-col justify-around h-full font-sap">
 			{
-				pet.stats[0].name.localeCompare('hp') === 0
+				petStats[0].name.localeCompare('hp') === 0
 					? (
-						<span class="bg-hp bg-cover aspect-square w-9 leading-9 text-center font-sap">
-							{pet.stats[0].base_stat}
-						</span>
-						<span class="bg-atk bg-cover aspect-square w-9 leading-9 text-center font-sap">
-							{pet.stats[1].base_stat}
-						</span>
+							<span class="bg-atk bg-contain bg-no-repeat aspect-square w-10 leading-10 text-center">
+								{petStats[1].base_stat}
+							</span>
+							<span class="bg-hp bg-contain bg-no-repeat aspect-square w-10 leading-10 text-center">
+								{petStats[0].base_stat}
+							</span>
 					)
 					: (
-						<span class="bg-atk bg-cover aspect-square w-9 leading-9 text-center font-sap">
-							{pet.stats[0].base_stat}
-						</span>
-						<span class="bg-hp bg-cover aspect-square w-9 leading-9 text-center font-sap">
-							{pet.stats[1].base_stat}
-						</span>
+							<span class="bg-atk bg-contain bg-no-repeat aspect-square w-10 leading-10 text-center">
+								{petStats[0].base_stat}
+							</span>
+							<span class="bg-hp bg-contain bg-no-repeat aspect-square w-10 leading-10 text-center">
+								{petStats[1].base_stat}
+							</span>
 					)
 			}
-		</div>
+		</section>
 	</div>
 </article>
+
+<style>
+	@media (min-width: 640px) {
+		.card:nth-child(odd) {
+			transform-origin: top left;
+		}
+		.card:nth-child(even) {
+			transform-origin: top right;
+		}
+	}
+
+	@media (min-width: 768px) {
+		.card:nth-child(3n + 1) {
+			transform-origin: top left;
+		}
+		.card:nth-child(3n + 2) {
+			transform-origin: top center;
+		}
+		.card:nth-child(3n + 3) {
+			transform-origin: top right;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.card:nth-child(4n + 1) {
+			transform-origin: top left;
+		}
+		.card:nth-child(4n + 2), .card:nth-child(4n + 3) {
+			transform-origin: top center;
+		}
+		.card:nth-child(4n + 4) {
+			transform-origin: top right;
+		}
+	}
+</style>

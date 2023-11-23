@@ -17,11 +17,11 @@ let isError = false;
 ---
 
 <Layout title="Pets">
-	<section class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-16">
+	<section class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-16">
 		{
 			isError
 				? 'There was an error' // ? res.code + res.message + res.description
-				: pets.map(pet => <CardPet pet={pet}></CardPet>)
+				: pets.map(pet => <CardPet petName={pet.name} petSprites={pet.sprites} petStats={pet.stats}></CardPet>)
 		}
 	</section>
 </Layout>
