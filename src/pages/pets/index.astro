@@ -4,6 +4,7 @@ import type { Pet } from '@dtypes/pet.ts';
 // import type { API } from '@dtypes/api.ts';
 import petsRes from '../../mocks/pets.json';
 import ListPet from '@components/ListPet';
+import Filters from '@components/Filters';
 
 // const res = (await fetch('https://sapi-kkff.onrender.com/api/v1/pets').then(res => res.json()).catch(console.error)) as API;
 
@@ -17,9 +18,14 @@ let isError = false;
 ---
 
 <Layout title="Pets">
-	{
-		isError
-			? 'There was an error' // ? res.code + res.message + res.description
-			: <ListPet pets={pets}></ListPet>
-	}
+	<main class="w-full px-4">
+		{
+			isError
+				? 'There was an error' // ? res.code + res.message + res.description
+				: (
+					<Filters client:load name={true} sortAlpha={true} sortTier={true} tier={true}></Filters>
+					<ListPet client:load pets={pets}></ListPet>
+				)
+		}
+	</main>
 </Layout>
