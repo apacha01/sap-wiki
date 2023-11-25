@@ -1,7 +1,7 @@
 import type { PossibleTiers } from 'src/types';
 import type { ChangeEvent } from 'preact/compat';
 import { SORT_ALPHA, SORT_TIER } from 'src/constants/sort';
-import { setAlphaSortFilter, setApplyFilters, setNameFilter, toggleTierFromFilter } from 'src/stores/filtersStore';
+import { setAlphaSortFilter, setApplyFilters, setApplySorting, setNameFilter, toggleTierFromFilter } from 'src/stores/filtersStore';
 import Toggle from './Toggle';
 
 export default function Filters({ name = true, sortAlpha = true, tier = true, sortTier = true }:
@@ -30,6 +30,11 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 	const handleFiltersToggle = (e: MouseEvent) => {
 		const checked = (e.currentTarget as HTMLInputElement).checked;
 		setApplyFilters(checked);
+	};
+
+	const handleSortingToggle = (e: MouseEvent) => {
+		const checked = (e.currentTarget as HTMLInputElement).checked;
+		setApplySorting(checked);
 	};
 
 	return (
@@ -102,6 +107,7 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 			</div>
 			<div>
 				<Toggle label='Filters' toggled onToggle={handleFiltersToggle} />
+				<Toggle label='Sorting' toggled onToggle={handleSortingToggle} />
 			</div>
 		</section>
 	);
