@@ -1,14 +1,14 @@
 import type { PossibleTiers } from 'src/types';
 import type { ChangeEvent } from 'preact/compat';
 import { SORT_ALPHA, SORT_TIER } from 'src/constants/sort';
-import { setAlphaSortFilter, setApplyFilters, setApplySorting, setNameFilter, toggleTierFromFilter } from 'src/stores/filtersStore';
+import { setAlphaSortFilter, setApplyFilters, setApplySorting, setNameFilter, setTierSortFilter, toggleTierFromFilter } from 'src/stores/filtersStore';
 import Toggle from './Toggle';
 
 export default function Filters({ name = true, sortAlpha = true, tier = true, sortTier = true }:
 	{ name: boolean, sortAlpha: boolean, tier: boolean, sortTier: boolean }) {
 
 	const handleNameType = (e: ChangeEvent<HTMLInputElement>) => {
-		const name = e.currentTarget.value.localeCompare('') === 0 ? null : e.currentTarget.value.toLowerCase();
+		const name = e.currentTarget.value.toLowerCase();
 		setNameFilter(name);
 	};
 
@@ -47,7 +47,13 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 						? (
 							<div class="flex flex-col justify-around max-w-full">
 								<label htmlFor="name-filter">Name: </label>
-								<input class="px-2 rounded-lg" type="text" name="name-filter" id="name-filter" onInput={handleNameType} />
+								<input
+									class="px-2 rounded-lg"
+									type="text"
+									name="name-filter"
+									id="name-filter"
+									onInput={handleNameType}
+								/>
 							</div>
 						)
 						: null
@@ -77,7 +83,12 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 						? (
 							<div class="flex flex-col justify-around max-w-full">
 								<label htmlFor="sortAlpha-filter">Sort alphabetically</label>
-								<select class="px-2 rounded-lg" name="sortAlpha-filter" id="sortAlpha-filter" onChange={handleAlphaSortingOrderSelect} >
+								<select
+									class="px-2 rounded-lg"
+									name="sortAlpha-filter"
+									id="sortAlpha-filter"
+									onChange={handleAlphaSortingOrderSelect}
+								>
 									{Object.keys(SORT_ALPHA).map(k =>
 										<option key={k} value={SORT_ALPHA[k as keyof typeof SORT_ALPHA]}>
 											{SORT_ALPHA[k as keyof typeof SORT_ALPHA]}
@@ -93,7 +104,11 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 						? (
 							<div class="flex flex-col justify-around max-w-full">
 								<label htmlFor="sortTier-filter">Sort by tier</label>
-								<select class="px-2 rounded-lg" name="sortTier-filter" id="sortTier-filter">
+								<select
+									class="px-2 rounded-lg"
+									name="sortTier-filter"
+									id="sortTier-filter"
+								>
 									{Object.keys(SORT_TIER).map(k =>
 										<option key={k} value={SORT_TIER[k as keyof typeof SORT_TIER]}>
 											{SORT_TIER[k as keyof typeof SORT_TIER]}
@@ -105,9 +120,9 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 						: null
 				}
 			</div>
-			<div>
-				<Toggle label='Filters' toggled onToggle={handleFiltersToggle} />
-				<Toggle label='Sorting' toggled onToggle={handleSortingToggle} />
+			<div class="flex gap-8">
+				<Toggle label='Filters' onToggle={handleFiltersToggle} toggled={true} />
+				<Toggle label='Sorting' onToggle={handleSortingToggle} toggled={false} />
 			</div>
 		</section>
 	);

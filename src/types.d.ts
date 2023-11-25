@@ -25,7 +25,7 @@ export type Filters = {
 	applyFilters: boolean,
 	applySorting: boolean,
 	tiers: TierFilter;
-	name: string | null;
+	name: string;
 	sortAlpha: OrderByAlphaFilter;
 	sortTier: OrderByTierFilter;
 }

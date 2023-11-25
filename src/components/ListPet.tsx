@@ -8,7 +8,7 @@ export default function ListPet({ pets }: { pets: Pet[] }) {
 	const $filters = useStore(filters);
 
 	const filteredList = $filters.applyFilters
-		? pets.filter(pet => ($filters.tiers.includes(pet.tier_info.tier)) && ($filters.name === null || pet.name.includes($filters.name)))
+		? pets.filter(pet => ($filters.tiers.includes(pet.tier_info.tier)) && ($filters.name.localeCompare('') === 0 || pet.name.includes($filters.name)))
 		: pets;
 
 	const sortedList = $filters.applySorting

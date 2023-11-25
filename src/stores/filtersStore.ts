@@ -6,9 +6,9 @@ import { SORT_ALPHA, SORT_TIER } from 'src/constants/sort';
 export const filters = atom<Filters>(
 	{
 		applyFilters: true,
-		applySorting: true,
+		applySorting: false,
 		tiers: [1, 2, 3, 4, 5, 6],
-		name: null,
+		name: '',
 		sortAlpha: SORT_ALPHA.ASC,
 		sortTier: SORT_TIER.ASC
 	}
@@ -44,7 +44,7 @@ export const toggleTierFromFilter = (tier: PossibleTiers) => {
 	filters.set({ ...filters.get(), tiers: newTiers });
 };
 
-export const setNameFilter = (name: string | null) => {
+export const setNameFilter = (name: string) => {
 	filters.set({ ...filters.get(), name });
 };
 
