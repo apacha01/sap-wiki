@@ -1,11 +1,13 @@
 import type { PossibleTiers } from 'src/types';
 import type { ChangeEvent } from 'preact/compat';
 import { SORT_ALPHA, SORT_TIER } from 'src/constants/sort';
-import { setAlphaSortFilter, setApplyFilters, setApplySorting, setNameFilter, setTierSortFilter, toggleTierFromFilter } from 'src/stores/filtersStore';
+import { filters, setAlphaSortFilter, setApplyFilters, setApplySorting, setNameFilter, setTierSortFilter, toggleTierFromFilter } from 'src/stores/filtersStore';
 import Toggle from './Toggle';
+import { useStore } from '@nanostores/preact';
 
 export default function Filters({ name = true, sortAlpha = true, tier = true, sortTier = true }:
 	{ name: boolean, sortAlpha: boolean, tier: boolean, sortTier: boolean }) {
+	const $filters = useStore(filters);
 
 	const handleNameType = (e: ChangeEvent<HTMLInputElement>) => {
 		const name = e.currentTarget.value.toLowerCase();
@@ -60,6 +62,7 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 									type="text"
 									name="name-filter"
 									id="name-filter"
+									value={$filters.name}
 									onInput={handleNameType}
 								/>
 							</div>
@@ -75,7 +78,7 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 									{
 										[1, 2, 3, 4, 5, 6].map(n => (
 											<>
-												<button onClick={handleTierType} id={`tier-${n}-btn`}>
+												<button onClick={handleTierType} id={`tier-${n}-btn`} aria-label={`tier-${n}-button-filter`}>
 													<img class="aspect-square w-7" src={`/imgs/25px-Tier_${n}_Icon.webp`} alt={`SAP Tier ${n} dice sprite`} />
 												</button>
 											</>
@@ -93,6 +96,7 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 								<label htmlFor="sortAlpha-filter">Sort alphabetically</label>
 								<select
 									class="px-2 rounded-lg"
+									value={$filters.sortAlpha}
 									name="sortAlpha-filter"
 									id="sortAlpha-filter"
 									onChange={handleAlphaSortingOrderSelect}
@@ -114,6 +118,7 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 								<label htmlFor="sortTier-filter">Sort by tier</label>
 								<select
 									class="px-2 rounded-lg"
+									value={$filters.sortTier}
 									name="sortTier-filter"
 									id="sortTier-filter"
 									onChange={handleTierSortingOrderSelect}
@@ -130,8 +135,8 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 				}
 			</div>
 			<div class="flex gap-8">
-				<Toggle label='Filters' onToggle={handleFiltersToggle} toggled={true} />
-				<Toggle label='Sorting' onToggle={handleSortingToggle} toggled={false} />
+				<Toggle label='Filters' onToggle={handleFiltersToggle} toggled={$filters.applyFilters} />
+				<Toggle label='Sorting' onToggle={handleSortingToggle} toggled={$filters.applySorting} />
 			</div>
 		</section>
 	);
