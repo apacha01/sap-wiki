@@ -1,7 +1,7 @@
 import type { PossibleTiers } from 'src/types';
 import type { ChangeEvent } from 'preact/compat';
 import { SORT_ALPHA, SORT_TIER } from 'src/constants/sort';
-import { setNameFilter, toggleTierFromFilter } from 'src/stores/filtersStore';
+import { setAlphaSortFilter, setNameFilter, toggleTierFromFilter } from 'src/stores/filtersStore';
 
 export default function Filters({ name = true, sortAlpha = true, tier = true, sortTier = true }:
 	{ name: boolean, sortAlpha: boolean, tier: boolean, sortTier: boolean }) {
@@ -16,6 +16,14 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 		const tier = parseInt(id.charAt(id.indexOf('-') + 1)) as PossibleTiers;
 		document.getElementById(id)?.classList.toggle('opacity-50');
 		toggleTierFromFilter(tier);
+	};
+
+	const handleAlphaSortingOrderSelect = (e: ChangeEvent<HTMLSelectElement>) => {
+		const value =
+			e.currentTarget.value.localeCompare(SORT_ALPHA.DESC) === 0
+				? SORT_ALPHA.DESC
+				: SORT_ALPHA.ASC;
+		setAlphaSortFilter(value);
 	};
 
 	return (
@@ -59,7 +67,7 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 					? (
 						<div class="flex flex-col justify-around">
 							<label htmlFor="sortAlpha-filter">Sort alphabetically</label>
-							<select class="px-2 rounded-lg" name="sortAlpha-filter" id="sortAlpha-filter">
+							<select class="px-2 rounded-lg" name="sortAlpha-filter" id="sortAlpha-filter" onChange={handleAlphaSortingOrderSelect} >
 								{Object.keys(SORT_ALPHA).map(k =>
 									<option key={k} value={SORT_ALPHA[k as keyof typeof SORT_ALPHA]}>
 										{SORT_ALPHA[k as keyof typeof SORT_ALPHA]}
