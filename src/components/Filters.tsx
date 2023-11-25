@@ -27,6 +27,14 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 		setAlphaSortFilter(value);
 	};
 
+	const handleTierSortingOrderSelect = (e: ChangeEvent<HTMLSelectElement>) => {
+		const value =
+			e.currentTarget.value.localeCompare(SORT_TIER.DESC) === 0
+				? SORT_TIER.DESC
+				: SORT_TIER.ASC;
+		setTierSortFilter(value);
+	};
+
 	const handleFiltersToggle = (e: MouseEvent) => {
 		const checked = (e.currentTarget as HTMLInputElement).checked;
 		setApplyFilters(checked);
@@ -108,6 +116,7 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 									class="px-2 rounded-lg"
 									name="sortTier-filter"
 									id="sortTier-filter"
+									onChange={handleTierSortingOrderSelect}
 								>
 									{Object.keys(SORT_TIER).map(k =>
 										<option key={k} value={SORT_TIER[k as keyof typeof SORT_TIER]}>
