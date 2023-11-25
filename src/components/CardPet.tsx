@@ -1,6 +1,7 @@
-import type { Sprites, Stat } from 'src/types';
+import type { PossibleTiers, Sprites, Stat } from 'src/types';
 
-export default function CardPet({ petName, petSprites, petStats }: { petName: string, petSprites: Sprites, petStats: Stat[] }) {
+export default function CardPet({ petName, petTier, petSprites, petStats }:
+	{ petName: string, petTier: PossibleTiers, petSprites: Sprites, petStats: Stat[] }) {
 	const name = petName.replace(/_([a-z])/g, (_, match) => ` ${match.toUpperCase()}`).replace(/^[a-z]/, match => match.toUpperCase());
 
 	const { standard } = petSprites;
@@ -10,9 +11,12 @@ export default function CardPet({ petName, petSprites, petStats }: { petName: st
 	const atk = petStats[hpIndex === 0 ? 1 : 0].base_stat;
 
 	return (
-		<article class="card group w-56 h-48 m-auto px-6 py-3 flex flex-col gap-4 bg-fun-green-700 rounded-lg shadow-lg shadow-black
+		<article class="relative group w-56 h-48 m-auto px-6 py-3 flex flex-col gap-4 bg-fun-green-700 rounded-lg shadow-lg shadow-black
 			hover:z-[999] hover:scale-110 hover:shadow-2xl hover:shadow-black transition-[transform,shadow] ease-in-out"
 		>
+			<span class="absolute top-0 left-0 aspect-square w-8 -translate-x-1/4 -translate-y-1/4">
+				<img class="aspect-square w-full" src={`/imgs/25px-Tier_${petTier}_Icon.webp`} alt={`SAP Tier ${petTier} dice sprite`} />
+			</span>
 			<h2 class="w-full text-center text-3xl leading-7 font-sap font-bold py-1 border-b border-b-fun-green-900">
 				{name}
 			</h2>
