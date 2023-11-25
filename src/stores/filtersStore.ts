@@ -1,4 +1,4 @@
-import type { Filters, OrderByAlphaFilter, OrderByTierFilter, TierFilter } from '@dtypes/filters';
+import type { Filters, OrderByAlphaFilter, OrderByTierFilter, PossibleTiers } from 'src/types';
 import { atom } from 'nanostores';
 import { SORT_ALPHA, SORT_TIER } from 'src/constants/sort';
 
@@ -7,7 +7,7 @@ export const filters = atom<Filters>(
 	{
 		applyFilters: true,
 		applySorting: true,
-		tier: 0,
+		tiers: [1, 2, 3, 4, 5, 6],
 		name: null,
 		sortAlpha: SORT_ALPHA.ASC,
 		sortTier: SORT_TIER.ASC
@@ -23,8 +23,25 @@ export const setApplySorting = (applySorting: boolean) => {
 	filters.set({ ...filters.get(), applySorting });
 };
 
-export const setTierFilter = (tier: TierFilter) => {
-	filters.set({ ...filters.get(), tier });
+export const addTierToFilter = (tier: PossibleTiers) => {
+	const newTiers = filters.get().tiers;
+	newTiers.push(tier);
+	filters.set({ ...filters.get(), tiers: newTiers });
+};
+
+export const removeTierFromFilter = (tier: PossibleTiers) => {
+	const newTiers = filters.get().tiers.filter((t) => t !== tier);
+	filters.set({ ...filters.get(), tiers: newTiers });
+};
+
+export const toggleTierFromFilter = (tier: PossibleTiers) => {
+	const newTiers = filters.get().tiers;
+
+	const index = newTiers.findIndex((t) => t === tier);
+	if (index === -1) newTiers.push(tier);
+	else newTiers.splice(index, 1);
+
+	filters.set({ ...filters.get(), tiers: newTiers });
 };
 
 export const setNameFilter = (name: string | null) => {

@@ -1,4 +1,4 @@
-import type { Pet } from '@dtypes/pet';
+import type { Pet } from 'src/types';
 import CardPet from './CardPet.tsx';
 import { useStore } from '@nanostores/preact';
 import { filters } from 'src/stores/filtersStore.ts';
@@ -8,7 +8,7 @@ export default function ListPet({ pets }: { pets: Pet[] }) {
 	const $filters = useStore(filters);
 
 	const filteredList = $filters.applyFilters
-		? pets.filter(pet => ($filters.tier === 0 || pet.tier_info.tier === $filters.tier) && ($filters.name === null || pet.name.includes($filters.name)))
+		? pets.filter(pet => ($filters.tiers.includes(pet.tier_info.tier)) && ($filters.name === null || pet.name.includes($filters.name)))
 		: pets;
 
 	const sortedList = $filters.applySorting

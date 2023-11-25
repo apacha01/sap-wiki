@@ -1,4 +1,4 @@
-import type { Sprites, Stat } from '@dtypes/pet';
+import type { Sprites, Stat } from 'src/types';
 
 export default function CardPet({ petName, petSprites, petStats }: { petName: string, petSprites: Sprites, petStats: Stat[] }) {
 	const name = petName.replace(/_([a-z])/g, (_, match) => ` ${match.toUpperCase()}`).replace(/^[a-z]/, match => match.toUpperCase());

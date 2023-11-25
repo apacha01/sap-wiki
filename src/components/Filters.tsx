@@ -1,18 +1,27 @@
+import type { PossibleTiers } from 'src/types';
+import type { ChangeEvent } from 'preact/compat';
 import { SORT_ALPHA, SORT_TIER } from 'src/constants/sort';
-import { setNameFilter } from 'src/stores/filtersStore';
+import { setNameFilter, toggleTierFromFilter } from 'src/stores/filtersStore';
 
 export default function Filters({ name = true, sortAlpha = true, tier = true, sortTier = true }:
 	{ name: boolean, sortAlpha: boolean, tier: boolean, sortTier: boolean }) {
 
-	const handleNameType = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleNameType = (e: ChangeEvent<HTMLInputElement>) => {
 		const name = e.currentTarget.value.localeCompare('') === 0 ? null : e.currentTarget.value.toLowerCase();
 		setNameFilter(name);
+	};
+
+	const handleTierType = (e: MouseEvent) => {
+		const { id } = e.currentTarget as Element;
+		const tier = parseInt(id.charAt(id.indexOf('-') + 1)) as PossibleTiers;
+		document.getElementById(id)?.classList.toggle('opacity-50');
+		toggleTierFromFilter(tier);
 	};
 
 	return (
 		<section
 			class="w-full min-h-[5rem] mt-10 flex justify-around items-start flex-col md:flex-row md:items-center gap-2
-				px-8 py-4 rounded-3xl text-xl bg-seagull-800/90"
+				px-8 py-4 rounded-3xl text-xl bg-seagull-800/80"
 		>
 
 			{
@@ -30,7 +39,17 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 					? (
 						<div class="flex flex-col justify-around">
 							<label htmlFor="tier-filter">Tier: </label>
-							<input class="px-2 rounded-lg" type="number" name="tier-filter" id="tier-filter" />
+							<div class="flex gap-1">
+								{
+									[1, 2, 3, 4, 5, 6].map(n => (
+										<>
+											<button onClick={handleTierType} id={`tier-${n}-btn`}>
+												<img class="aspect-square w-7" src={`/imgs/25px-Tier_${n}_Icon.webp`} alt={`SAP Tier ${n} dice sprite`} />
+											</button>
+										</>
+									))
+								}
+							</div>
 						</div>
 					)
 					: null
