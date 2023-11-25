@@ -13,7 +13,7 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 	};
 
 	const handleTierType = (e: MouseEvent) => {
-		const { id } = e.currentTarget as Element;
+		const { id } = e.currentTarget as HTMLButtonElement;
 		const tier = parseInt(id.charAt(id.indexOf('-') + 1)) as PossibleTiers;
 		document.getElementById(id)?.classList.toggle('opacity-50');
 		toggleTierFromFilter(tier);
