@@ -7,9 +7,6 @@
 			],
 			"@layouts/*": [
 				"src/layouts/*"
-			],
-			"@dtypes/*": [
-				"src/types/*"
 			]
 		},
 		"jsx": "react-jsx",
