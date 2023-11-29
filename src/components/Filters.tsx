@@ -79,7 +79,7 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 										[1, 2, 3, 4, 5, 6].map(n => (
 											<>
 												<button onClick={handleTierType} id={`tier-${n}-btn`} aria-label={`tier-${n}-button-filter`}>
-													<img class="aspect-square w-7" src={`/imgs/25px-Tier_${n}_Icon.webp`} alt={`SAP Tier ${n} dice sprite`} />
+													<img class="aspect-square w-7" src={`/imgs/84px-Tier_${n}_Icon.png`} alt={`SAP Tier ${n} dice sprite`} />
 												</button>
 											</>
 										))
