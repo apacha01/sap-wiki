@@ -23,10 +23,10 @@ export default function CardPet({ petName, petTier, petSprites, petStats }:
 			<div class="w-full flex justify-center items-center gap-4">
 				<img class="h-[95px] object-contain" src={standard} alt={`SAP ${name} standard sprite`} title={name} />
 				<section class="flex flex-col justify-around h-full font-sap">
-					<span class="bg-atk bg-contain bg-no-repeat aspect-square w-10 leading-10 text-center">
+					<span class="bg-atk bg-contain bg-no-repeat aspect-square w-10 leading-10 text-center text-xl">
 						{atk}
 					</span>
-					<span class="bg-hp bg-contain bg-no-repeat aspect-square w-10 leading-10 text-center">
+					<span class="bg-hp bg-contain bg-no-repeat aspect-square w-10 leading-10 text-center text-xl">
 						{hp}
 					</span>
 				</section>
