@@ -1,0 +1,83 @@
+---
+import Layout from '@layouts/Layout.astro';
+import type { API, Pet } from 'src/types';
+import { CUSTOM_PET_ENDPOINT } from '../../constants/api';
+import { snakeCaseToNormalText } from '../../utils';
+
+export const prerender = false;
+
+let { name } = Astro.params;
+
+// if no name return to pets list
+if (name === undefined) {
+	name = '';
+	Astro.redirect('/pets');
+}
+
+const res = (await fetch(CUSTOM_PET_ENDPOINT(name)).then(r => r.json()).catch(console.error)) as API;
+const pet = res.content as Pet;
+
+const petName = snakeCaseToNormalText(pet.name);
+---
+
+<Layout title={petName}>
+	<main class="mt-12 px-8 w-full">
+		<h1 class="font-sap font-bold mb-12 text-center text-5xl text-sap-yellow-400 tracking-wider">{petName}</h1>
+		<section class="flex w-full flex-col gap-8">
+			<div class="w-full flex flex-col-reverse gap-8 items-center justify-between sm:flex-row self-end">
+				<div class="flex flex-col justify-around gap-16">
+					<p class="text-2xl">
+						The <strong>{petName}</strong> is a Tier {pet.tier_info.tier} pet that can be found in the
+						{pet.packs.map(p => p.name).join(', ')}
+						pack.
+					</p>
+					<ul class="self-start">
+						<li class="w-full text-xl flex">
+							<span class="bg-l1 aspect-square w-16 bg-no-repeat bg-contain inline-block mr-6 sm:w-8"></span>
+							<p class="inline-block font-libsans leading-8">
+								<strong>{snakeCaseToNormalText(pet.ability_trigger.name)}</strong>
+								<span class="bg-arrow w-8 h-6 mx-3 bg-no-repeat bg-cover inline-block"></span>
+								{pet.abilities.lv1_ability}
+							</p>
+						</li>
+						<li class="w-full text-xl flex">
+							<span class="bg-l2 aspect-square w-16 bg-no-repeat bg-contain inline-block mr-6 sm:w-8"></span>
+							<p class="inline-block font-libsans leading-8">
+								<strong>{snakeCaseToNormalText(pet.ability_trigger.name)}</strong>
+								<span class="bg-arrow w-8 h-6 mx-3 bg-no-repeat bg-cover inline-block"></span>
+								{pet.abilities.lv2_ability}
+							</p>
+						</li>
+						<li class="w-full text-xl flex">
+							<span class="bg-l3 aspect-square w-16 bg-no-repeat bg-contain inline-block mr-6 sm:w-8"></span>
+							<p class="inline-block font-libsans leading-8">
+								<strong>{snakeCaseToNormalText(pet.ability_trigger.name)}</strong>
+								<span class="bg-arrow w-8 h-6 mx-3 bg-no-repeat bg-cover inline-block"></span>
+								{pet.abilities.lv3_ability}
+							</p>
+						</li>
+					</ul>
+				</div>
+				<div class="relative flex flex-col justify-center items-center gap-6 border-seagull-700 border-2 rounded-xl p-6">
+					<img class="absolute w-16 -top-6 -right-6" src={`/imgs/84px-Tier_${pet.tier_info.tier}_Icon.png`} title={`Tier ${pet.tier_info.tier} Icon Sprite`} alt={`Tier ${pet.tier_info.tier} Icon Sprite`} />
+					<img class="w-64" src={pet.sprites.standard} title={petName} alt={`SAP ${petName} sprite`} />
+					<div class="w-full flex justify-around">
+						<span class="bg-atk bg-contain bg-no-repeat bg-center w-14 h-14 leading-[3.5rem] font-sap text-center text-3xl">{pet.stats[0].base_stat}</span>
+						<span class="bg-hp bg-contain bg-no-repeat bg-center w-14 h-14 leading-[3.5rem] font-sap text-center text-3xl">{pet.stats[1].base_stat}</span>
+					</div>
+				</div>
+			</div>
+			<div class="flex flex-col gap-3">
+				<h2 class="font-sap text-2xl">Sprites</h2>
+				<ul class="flex flex-col gap-12 justify-start items-center sm:flex-row sm:ml-3">
+					<img class="aspect-square w-40 border-seagull-700 border-2 rounded-xl p-2" src={pet.sprites.standard} title=`${petName} Standard` alt={`SAP ${petName} standard sprite`}>
+					{
+						pet.sprites.classic
+							? <img class="aspect-square w-40 border-seagull-700 border-2 rounded-xl p-2" src={pet.sprites.classic} title={`${petName} Classic`} alt={`SAP ${petName} classic sprite`}>
+							: null
+					}
+				</ul>
+			</div>
+		</section>
+	</main>
+</Layout>

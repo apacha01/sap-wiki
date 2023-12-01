@@ -34,10 +34,12 @@ export default function ListPet({ pets }: { pets: Pet[] }) {
 			{
 				sortedList.map(pet => {
 					return (
-						<CardPet key={pet._id} petName={pet.name} petTier={pet.tier_info.tier} petSprites={pet.sprites} petStats={pet.stats} />
+						<a href={pet.name}>
+							<CardPet key={pet._id} petName={pet.name} petTier={pet.tier_info.tier} petSprites={pet.sprites} petStats={pet.stats} />
+						</a>
 					);
 				})
 			}
-		</section>
+		</section >
 	);
 }

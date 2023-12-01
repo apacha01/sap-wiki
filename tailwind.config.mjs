@@ -6,11 +6,16 @@ export default {
 	theme: {
 		extend: {},
 		fontFamily: {
-			'sap': ['sap']
+			'sap': ['sap'],
+			'libsans': ['libsans']
 		},
 		backgroundImage: {
 			'atk': 'url(/imgs/100px-Attack_Icon.png)',
-			'hp': 'url(/imgs/100px-Health_Icon.png)'
+			'hp': 'url(/imgs/100px-Health_Icon.png)',
+			'arrow': 'url(/svgs/arrow-right.svg)',
+			'l1': 'url(/imgs/128px-Level1_Icon.png)',
+			'l2': 'url(/imgs/128px-Level2_Icon.png)',
+			'l3': 'url(/imgs/128px-Level3_Icon.png)'
 		},
 		colors: {
 			...colors,
