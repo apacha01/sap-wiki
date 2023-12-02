@@ -47,6 +47,8 @@ export type API = {
 	documentationURL: string;
 }
 
+export type Model = Food | Pet | Pack | Token | Toy;
+
 // FOODS
 export type Food = {
 	_id: string;
@@ -72,6 +74,7 @@ export type Source = {
 export type Pack = {
 	_id: string;
 	name: string;
+	sprite: string;
 	pets: Pets;
 	foods: Foods;
 	description: string;

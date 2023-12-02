@@ -24,7 +24,7 @@ let isError = false;
 				? 'There was an error' // ? res.code + res.message + res.description
 				: (
 					<Filters client:load name={true} sortAlpha={true} sortTier={true} tier={true}></Filters>
-					<ListPet pets={pets}></ListPet>
+					<ListPet client:load pets={pets}></ListPet>
 				)
 		}
 	</main>

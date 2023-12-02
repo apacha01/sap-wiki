@@ -3,6 +3,7 @@ import CardPet from './CardPet.tsx';
 import { useStore } from '@nanostores/preact';
 import { filters } from 'src/stores/filtersStore.ts';
 import { SORT_ALPHA, SORT_TIER } from 'src/constants/sort.ts';
+import List from './List.tsx';
 
 export default function ListPet({ pets }: { pets: Pet[] }) {
 	const $filters = useStore(filters);
@@ -30,16 +31,6 @@ export default function ListPet({ pets }: { pets: Pet[] }) {
 		: filteredList;
 
 	return (
-		<section class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-16">
-			{
-				sortedList.map(pet => {
-					return (
-						<a href={pet.name}>
-							<CardPet key={pet._id} petName={pet.name} petTier={pet.tier_info.tier} petSprites={pet.sprites} petStats={pet.stats} />
-						</a>
-					);
-				})
-			}
-		</section >
+		<List list={sortedList} cardComponent={CardPet}></List>
 	);
 }
