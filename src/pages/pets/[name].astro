@@ -1,9 +1,9 @@
 ---
 import Layout from '@layouts/Layout.astro';
-import type { API, Pet } from 'src/types';
-import { CUSTOM_PET_ENDPOINT } from '../../constants/api';
 import { snakeCaseToNormalText } from '../../utils';
+import type { API, Pet } from 'src/types';
 import { setError } from 'src/stores/errorStore';
+import { CUSTOM_PET_ENDPOINT } from 'src/constants/api';
 
 export const prerender = false;
 
@@ -11,24 +11,17 @@ let { name } = Astro.params;
 
 // if no name return to pets list
 if (name === undefined) {
-	name = '';
-	Astro.redirect('/pets');
+	return Astro.redirect('/pets');
 }
 
-const res =	await fetch(CUSTOM_PET_ENDPOINT(name.toLowerCase()))
-	.catch(err => {
-		console.error(err);
-		return Astro.redirect('/');
-	});
+const data = (await fetch(CUSTOM_PET_ENDPOINT(name.toLowerCase())).then(res => res.json()).catch(console.error)) as API;
 
-const data = await res.json() as API;
 const { code, content } = data;
 
 if (code !== 200) {
 	setError(data);
 	return Astro.redirect('/error');
 }
-
 
 const pet = content as Pet;
 const petName = snakeCaseToNormalText(pet.name);
@@ -85,10 +78,10 @@ const petName = snakeCaseToNormalText(pet.name);
 			<div class="flex flex-col gap-3">
 				<h2 class="font-sap text-2xl">Sprites</h2>
 				<ul class="flex flex-col gap-12 justify-start items-center sm:flex-row sm:ml-3">
-					<img class="h-40 border-seagull-700 border-2 rounded-xl p-2" src={pet.sprites.standard} title=`${petName} Standard` alt={`SAP ${petName} standard sprite`}>
+					<img class="h-40 border-seagull-700 border-2 rounded-xl p-2" src={pet.sprites.standard} title=`${petName} Standard` alt=`SAP ${petName} standard sprite` />
 					{
 						pet.sprites.classic
-							? <img class="h-40 border-seagull-700 border-2 rounded-xl p-2" src={pet.sprites.classic} title={`${petName} Classic`} alt={`SAP ${petName} classic sprite`}>
+							? <img class="h-40 border-seagull-700 border-2 rounded-xl p-2" src={pet.sprites.classic} title={`${petName} Classic`} alt={`SAP ${petName} classic sprite`} />
 							: null
 					}
 				</ul>
