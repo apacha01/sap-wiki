@@ -18,9 +18,7 @@ export default function ResponseError() {
 			<section class="my-10">
 				<h3 class="font-libsans text-3xl text-seagull-50">API Documentation:</h3>
 				<p class="text-2xl ml-3">
-					You can check the documentation
-					<a class="text-seagull-300" href={$error?.documentationURL}> here </a>
-					for troubleshooting
+					You can check the documentation	<a class="text-seagull-300 hover:underline underline-offset-2" href={$error?.documentationURL}>here</a> for troubleshooting
 				</p>
 			</section>
 		</article>
