@@ -1,0 +1,28 @@
+---
+import Filters from '@components/Filters';
+import ListFood from '@components/ListFood';
+import Layout from '@layouts/Layout.astro';
+import { getAllFoods } from 'src/lib/apiCalls';
+import { setError } from 'src/stores/errorStore';
+import type { Food } from 'src/types';
+
+const data = await getAllFoods().catch(err => {
+	console.error(err);
+	setError(err);
+	return Astro.redirect('/error');
+});
+
+if ('documentationURL' in data) {
+	setError(data);
+	return Astro.redirect('/error');
+}
+
+const foods = data as Food[];
+---
+
+<Layout title="Foods">
+	<main class="w-full px-4">
+		<Filters client:load name={true} sortAlpha={true} sortTier={true} tier={true}></Filters>
+		<ListFood client:load foods={foods}></ListFood>
+	</main>
+</Layout>

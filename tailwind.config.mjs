@@ -15,7 +15,8 @@ export default {
 			'arrow': 'url(/svgs/arrow-right.svg)',
 			'l1': 'url(/imgs/128px-Level1_Icon.png)',
 			'l2': 'url(/imgs/128px-Level2_Icon.png)',
-			'l3': 'url(/imgs/128px-Level3_Icon.png)'
+			'l3': 'url(/imgs/128px-Level3_Icon.png)',
+			'coin': 'url(/imgs/Coin.png)'
 		},
 		colors: {
 			...colors,

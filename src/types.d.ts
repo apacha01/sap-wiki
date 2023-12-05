@@ -58,6 +58,7 @@ export type Food = {
 	effect: string;
 	perk: boolean;
 	sprites: Sprites;
+	price: number;
 }
 
 export type ShopTier = {
