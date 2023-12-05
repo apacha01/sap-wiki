@@ -6,7 +6,7 @@ import { SORT_ALPHA, SORT_TIER } from 'src/constants/sort';
 export const filters = atom<Filters>(
 	{
 		applyFilters: true,
-		applySorting: false,
+		applySorting: true,
 		tiers: [1, 2, 3, 4, 5, 6],
 		name: '',
 		sortAlpha: SORT_ALPHA.ASC,
