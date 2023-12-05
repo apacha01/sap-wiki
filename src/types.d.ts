@@ -61,7 +61,7 @@ export type Food = {
 }
 
 export type ShopTier = {
-	shop_tier: PossibleTiers;
+	tier: PossibleTiers;
 	url: string;
 }
 
