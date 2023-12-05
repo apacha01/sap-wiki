@@ -1,0 +1,82 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { snakeCaseToNormalText } from '../../lib/utils';
+import type { Food } from 'src/types';
+import { setError } from 'src/stores/errorStore';
+import { getFood } from 'src/lib/apiCalls';
+
+export const prerender = false;
+
+let { nameOrId } = Astro.params;
+
+// if no name or id return to pets list
+if (nameOrId === undefined) {
+	return Astro.redirect('/pets');
+}
+
+const data = await getFood(nameOrId.toLowerCase()).catch(err => {
+	console.error(err);
+	setError(err);
+	return Astro.redirect('/error');
+});
+
+if ('documentationURL' in data) {
+	setError(data);
+	return Astro.redirect('/error');
+}
+
+const food = data as Food;
+const foodName = snakeCaseToNormalText(food.name);
+---
+
+<Layout title={foodName}>
+	<main class="relative my-12 px-8 w-full">
+		<a href="/foods/" class="absolute top-0 left- bg-arrow rotate-180 aspect-square w-10"></a>
+		<h1 class="font-sap font-bold mb-12 text-center text-5xl text-sap-yellow-400 tracking-wider">{foodName}</h1>
+		<section class="flex w-full flex-col gap-8">
+			<div class="w-full flex flex-col-reverse gap-8 items-center justify-between sm:flex-row self-end">
+				<div class="flex flex-col justify-around gap-16">
+					<p class="text-2xl">
+						The <strong>{foodName}</strong> is a {food.price} gold Tier {food.shop_tier.tier} food.
+					</p>
+				</div>
+				<div class="relative flex flex-col justify-center items-center gap-6 border-seagull-700 border-2 rounded-xl p-6">
+					<img class="absolute w-16 -top-6 -left-6" src={`/imgs/84px-Tier_${food.shop_tier.tier}_Icon.png`} title={`Tier ${food.shop_tier.tier} Icon Sprite`} alt={`Tier ${food.shop_tier.tier} Icon Sprite`} />
+					<img class="w-64" src={food.sprites.standard} title={foodName} alt={`SAP ${foodName} sprite`} />
+					<span class="absolute -bottom-6 -left-6 bg-coin bg-contain bg-no-repeat aspect-square w-16 leading-[4rem] font-sap text-black text-center text-3xl">
+						{food.price}
+					</span>
+				</div>
+			</div>
+			<section class="flex flex-col my-4">
+				<h2 class="font-sap font-bold text-3xl">Effect:</h2>
+				<p class="text-xl text-center sm:text-left sm:ml-3">{food.effect}</p>
+			</section>
+			<section class="flex flex-col gap-3 my-4">
+				<h2 class="font-sap text-3xl">Sprites</h2>
+				<ul class="flex flex-col gap-12 justify-start items-center sm:flex-row sm:ml-3">
+					<img class="h-40 border-seagull-700 border-2 rounded-xl p-2" src={food.sprites.standard} title=`${foodName} Standard` alt=`SAP ${foodName} standard sprite` />
+					{
+						food.sprites.classic
+							? <img class="h-40 border-seagull-700 border-2 rounded-xl p-2" src={food.sprites.classic} title={`${foodName} Classic`} alt={`SAP ${foodName} classic sprite`} />
+							: null
+					}
+				</ul>
+			</section>
+			<section class="flex flex-col gap-3 my-4">
+				<h2 class="font-sap text-3xl">How to get it</h2>
+				<ul class="flex flex-col flex-wrap justify-center items-center sm:max-h-72 sm:items-start sm:ml-3">
+					{
+						food.sources.map(s => {
+							return (
+								<li class="flex pl-4 py-4 gap-4 text-xl sm:w-1/2 max-w-prose">
+									{s.source}
+								</li>
+							);
+						})
+					}
+				</ul>
+			</section>
+		</section>
+	</main>
+</Layout>
