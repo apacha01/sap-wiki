@@ -1,29 +1,31 @@
 ---
 import Layout from '@layouts/Layout.astro';
-import { snakeCaseToNormalText } from '../../utils';
-import type { API, Pet } from 'src/types';
+import { snakeCaseToNormalText } from '../../lib/utils';
+import type { Pet } from 'src/types';
 import { setError } from 'src/stores/errorStore';
-import { CUSTOM_PET_ENDPOINT } from 'src/constants/api';
+import { getPet } from 'src/lib/apiCalls';
 
 export const prerender = false;
 
-let { name } = Astro.params;
+let { nameOrId } = Astro.params;
 
-// if no name return to pets list
-if (name === undefined) {
+// if no name or id return to pets list
+if (nameOrId === undefined) {
 	return Astro.redirect('/pets');
 }
 
-const data = (await fetch(CUSTOM_PET_ENDPOINT(name.toLowerCase())).then(res => res.json()).catch(console.error)) as API;
+const data = await getPet(nameOrId.toLowerCase()).catch(err => {
+	console.error(err);
+	setError(err);
+	return Astro.redirect('/error');
+});
 
-const { code, content } = data;
-
-if (code !== 200) {
+if ('documentationURL' in data) {
 	setError(data);
 	return Astro.redirect('/error');
 }
 
-const pet = content as Pet;
+const pet = data as Pet;
 const petName = snakeCaseToNormalText(pet.name);
 ---
 

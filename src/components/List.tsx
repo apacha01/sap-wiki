@@ -12,7 +12,7 @@ export default function List<T extends Model>({ list, cardComponent: Card }: Lis
 			{
 				list.map(model => {
 					return (
-						<a href={model.name}>
+						<a href={model._id}>
 							<Card model={model}></Card>
 						</a>
 					);
