@@ -8,16 +8,19 @@ interface ListProps<T> {
 export default function List<T extends Model>({ list, cardComponent: Card }: ListProps<T>) {
 
 	return (
-		<section class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-16">
-			{
-				list.map(model => {
-					return (
-						<a href={model._id}>
-							<Card model={model}></Card>
-						</a>
-					);
-				})
-			}
-		</section >
+		<>
+			<h3 class="text-right font-libsans font-bold text-xl mt-16">Showing: {list.length} results</h3>
+			<section class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-16">
+				{
+					list.map(model => {
+						return (
+							<a href={model._id}>
+								<Card model={model}></Card>
+							</a>
+						);
+					})
+				}
+			</section >
+		</>
 	);
 }
