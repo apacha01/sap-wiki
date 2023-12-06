@@ -9,9 +9,9 @@ export const prerender = false;
 
 let { nameOrId } = Astro.params;
 
-// if no name or id return to pets list
+// if no name or id return to foods list
 if (nameOrId === undefined) {
-	return Astro.redirect('/pets');
+	return Astro.redirect('/foods');
 }
 
 const data = await getFood(nameOrId.toLowerCase()).catch(err => {
