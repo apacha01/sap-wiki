@@ -1,0 +1,28 @@
+---
+import Filters from '@components/Filters';
+import ListToken from '@components/ListToken';
+import Layout from '@layouts/Layout.astro';
+import { getAllTokens } from 'src/lib/apiCalls';
+import { setError } from 'src/stores/errorStore';
+import type { Token } from 'src/types';
+
+const data = await getAllTokens().catch(err => {
+	console.error(err);
+	setError(err);
+	return Astro.redirect('/error');
+});
+
+if ('documentationURL' in data) {
+	setError(data);
+	return Astro.redirect('/error');
+}
+
+const tokens = data as Token[];
+---
+
+<Layout title="Tokens">
+	<main class="w-full px-4">
+		<Filters client:load name={true} sortAlpha={true} sortTier={false} tier={false}></Filters>
+		<ListToken client:load tokens={tokens}></ListToken>
+	</main>
+</Layout>
