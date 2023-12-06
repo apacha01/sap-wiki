@@ -69,7 +69,7 @@ const petName = snakeCaseToNormalText(pet.name);
 					</ul>
 				</div>
 				<div class="relative flex flex-col justify-center items-center gap-6 border-seagull-700 border-2 rounded-xl p-6">
-					<img class="absolute w-16 -top-6 -right-6" src={`/imgs/84px-Tier_${pet.tier_info.tier}_Icon.png`} title={`Tier ${pet.tier_info.tier} Icon Sprite`} alt={`Tier ${pet.tier_info.tier} Icon Sprite`} />
+					<img class="absolute w-16 -top-6 -left-6" src={`/imgs/84px-Tier_${pet.tier_info.tier}_Icon.png`} title={`Tier ${pet.tier_info.tier} Icon Sprite`} alt={`Tier ${pet.tier_info.tier} Icon Sprite`} />
 					<img class="w-64" src={pet.sprites.standard} title={petName} alt={`SAP ${petName} sprite`} />
 					<div class="w-full flex justify-around">
 						<span class="bg-atk bg-contain bg-no-repeat bg-center w-14 h-14 leading-[3.5rem] font-sap text-center text-3xl">{pet.stats[0].base_stat}</span>
