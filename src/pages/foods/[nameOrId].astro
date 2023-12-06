@@ -33,8 +33,8 @@ const foodName = snakeCaseToNormalText(food.name);
 	<main class="relative my-12 px-8 w-full">
 		<a href="/foods/" class="absolute top-0 left- bg-arrow rotate-180 aspect-square w-10"></a>
 		<h1 class="font-sap font-bold mb-12 text-center text-5xl text-sap-yellow-400 tracking-wider">{foodName}</h1>
-		<section class="flex w-full flex-col gap-8">
-			<div class="w-full flex flex-col-reverse gap-8 items-center justify-between sm:flex-row self-end">
+		<article class="flex w-full flex-col gap-8">
+			<section class="w-full flex flex-col-reverse gap-8 items-center justify-between sm:flex-row self-end">
 				<div class="flex flex-col justify-around gap-16">
 					<p class="text-2xl">
 						The <strong>{foodName}</strong> is a {food.price} gold Tier {food.shop_tier.tier} food.
@@ -47,7 +47,7 @@ const foodName = snakeCaseToNormalText(food.name);
 						{food.price}
 					</span>
 				</div>
-			</div>
+			</section>
 			<section class="flex flex-col my-4">
 				<h2 class="font-sap font-bold text-3xl">Effect:</h2>
 				<p class="text-xl text-center sm:text-left sm:ml-3">{food.effect}</p>
@@ -77,6 +77,6 @@ const foodName = snakeCaseToNormalText(food.name);
 					}
 				</ul>
 			</section>
-		</section>
+		</article>
 	</main>
 </Layout>

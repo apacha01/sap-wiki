@@ -33,8 +33,8 @@ const petName = snakeCaseToNormalText(pet.name);
 	<main class="relative my-12 px-8 w-full">
 		<a href="/pets/" class="absolute top-0 left- bg-arrow rotate-180 aspect-square w-10"></a>
 		<h1 class="font-sap font-bold mb-12 text-center text-5xl text-sap-yellow-400 tracking-wider">{petName}</h1>
-		<section class="flex w-full flex-col gap-8">
-			<div class="w-full flex flex-col-reverse gap-8 items-center justify-between sm:flex-row self-end">
+		<article class="flex w-full flex-col gap-8">
+			<section class="w-full flex flex-col-reverse gap-8 items-center justify-between sm:flex-row self-end my-3">
 				<div class="flex flex-col justify-around gap-16">
 					<p class="text-2xl">
 						The <strong>{petName}</strong> is a Tier {pet.tier_info.tier} pet that can be found in the
@@ -76,9 +76,9 @@ const petName = snakeCaseToNormalText(pet.name);
 						<span class="bg-hp bg-contain bg-no-repeat bg-center w-14 h-14 leading-[3.5rem] font-sap text-center text-3xl">{pet.stats[1].base_stat}</span>
 					</div>
 				</div>
-			</div>
-			<div class="flex flex-col gap-3">
-				<h2 class="font-sap text-2xl">Sprites</h2>
+			</section>
+			<section class="flex flex-col gap-3 my-3">
+				<h2 class="font-sap text-3xl">Sprites</h2>
 				<ul class="flex flex-col gap-12 justify-start items-center sm:flex-row sm:ml-3">
 					<img class="h-40 border-seagull-700 border-2 rounded-xl p-2" src={pet.sprites.standard} title=`${petName} Standard` alt=`SAP ${petName} standard sprite` />
 					{
@@ -87,7 +87,7 @@ const petName = snakeCaseToNormalText(pet.name);
 							: null
 					}
 				</ul>
-			</div>
-		</section>
+			</section>
+		</article>
 	</main>
 </Layout>
