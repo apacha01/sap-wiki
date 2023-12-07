@@ -16,7 +16,8 @@ export default {
 			'l1': 'url(/imgs/128px-Level1_Icon.png)',
 			'l2': 'url(/imgs/128px-Level2_Icon.png)',
 			'l3': 'url(/imgs/128px-Level3_Icon.png)',
-			'coin': 'url(/imgs/Coin.png)'
+			'coin': 'url(/imgs/Coin.png)',
+			'clock': 'url(/imgs/Clock.png)'
 		},
 		colors: {
 			...colors,
