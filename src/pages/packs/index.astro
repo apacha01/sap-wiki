@@ -1,0 +1,28 @@
+---
+import Filters from '@components/Filters';
+import ListPack from '@components/ListPack';
+import Layout from '@layouts/Layout.astro';
+import { getAllPacks } from 'src/lib/apiCalls';
+import { setError } from 'src/stores/errorStore';
+import type { Pack } from 'src/types';
+
+const data = await getAllPacks().catch(err => {
+	console.error(err);
+	setError(err);
+	return Astro.redirect('/error');
+});
+
+if ('documentationURL' in data) {
+	setError(data);
+	return Astro.redirect('/error');
+}
+
+const packs = data as Pack[];
+---
+
+<Layout title='Toys'>
+	<main class="w-full px-4">
+		<Filters client:load name={true} sortAlpha={true} sortTier={false} tier={false}></Filters>
+		<ListPack client:load packs={packs}></ListPack>
+	</main>
+</Layout>

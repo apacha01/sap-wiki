@@ -17,10 +17,12 @@ export default {
 			'l2': 'url(/imgs/128px-Level2_Icon.png)',
 			'l3': 'url(/imgs/128px-Level3_Icon.png)',
 			'coin': 'url(/imgs/Coin.png)',
-			'clock': 'url(/imgs/Clock.png)'
+			'clock': 'url(/imgs/Clock.png)',
+			'pack': 'url(/imgs/Pack_Background.png)'
 		},
 		colors: {
 			...colors,
+			'cedar-wood-finish': '#641f00',
 			'sap-yellow': {
 				'50': '#fffeea',
 				'100': '#fffac5',
