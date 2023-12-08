@@ -1,0 +1,100 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { snakeCaseToNormalText } from '../../lib/utils';
+import type { Toy } from 'src/types';
+import { setError } from 'src/stores/errorStore';
+import { getToy } from 'src/lib/apiCalls';
+
+export const prerender = false;
+
+let { nameOrId } = Astro.params;
+
+// if no name or id return to foods list
+if (nameOrId === undefined) {
+	return Astro.redirect('/foods');
+}
+
+const data = await getToy(nameOrId.toLowerCase()).catch(err => {
+	console.error(err);
+	setError(err);
+	return Astro.redirect('/error');
+});
+
+if ('documentationURL' in data) {
+	setError(data);
+	return Astro.redirect('/error');
+}
+
+const toy = data as Toy;
+const toyName = snakeCaseToNormalText(toy.name);
+const trigger = snakeCaseToNormalText(toy.ability_trigger.trigger);
+---
+
+<Layout title={toyName}>
+	<main class="relative my-12 px-8 w-full">
+		<a href="/toys/" class="absolute top-0 left- bg-arrow rotate-180 aspect-square w-10"></a>
+		<h1 class="font-sap font-bold mb-12 text-center text-5xl text-sap-yellow-400 tracking-wider">{toyName}</h1>
+		<article class="flex w-full flex-col gap-8">
+			<section class="w-full flex flex-col-reverse gap-8 items-center justify-between sm:flex-row self-end">
+				<div class="flex flex-col justify-around gap-16">
+					<p class="text-2xl">
+						The <strong>{toyName}</strong> is a Tier {toy.tier_info.tier} toy that breaks after 2 turns.
+					</p>
+				</div>
+				<div class="relative flex flex-col justify-center items-center gap-6 border-seagull-700 border-2 rounded-xl p-6">
+					<img class="absolute w-16 -top-6 -left-6" src={`/imgs/84px-Tier_${toy.tier_info.tier}_Icon.png`} title={`Tier ${toy.tier_info.tier} Icon Sprite`} alt={`Tier ${toy.tier_info.tier} Icon Sprite`} />
+					<img class="w-64" src={toy.sprites.standard} title={toyName} alt={`SAP ${toyName} sprite`} />
+					<span class="absolute -bottom-6 -left-6 bg-clock bg-contain bg-no-repeat aspect-square w-16 leading-[4rem] font-sap text-black text-center text-3xl">
+						2
+					</span>
+				</div>
+			</section>
+			<section class="w-full flex flex-col gap-3">
+				<h2 class="font-sap font-bold text-3xl">Ability</h2>
+				<ul class="self-start">
+					<li class="w-full text-xl flex">
+						<span class="bg-l1 aspect-square w-16 bg-no-repeat bg-contain inline-block mr-6 sm:w-8"></span>
+						<p class="inline-block font-libsans leading-8">
+							<strong>{trigger}</strong>
+							<span class="bg-arrow w-8 h-6 mx-3 bg-no-repeat bg-cover inline-block"></span>
+							{toy.abilities.lv1_ability}
+						</p>
+					</li>
+					<li class="w-full text-xl flex">
+						<span class="bg-l2 aspect-square w-16 bg-no-repeat bg-contain inline-block mr-6 sm:w-8"></span>
+						<p class="inline-block font-libsans leading-8">
+							<strong>{trigger}</strong>
+							<span class="bg-arrow w-8 h-6 mx-3 bg-no-repeat bg-cover inline-block"></span>
+							{toy.abilities.lv2_ability}
+						</p>
+					</li>
+					<li class="w-full text-xl flex">
+						<span class="bg-l3 aspect-square w-16 bg-no-repeat bg-contain inline-block mr-6 sm:w-8"></span>
+						<p class="inline-block font-libsans leading-8">
+							<strong>{trigger}</strong>
+							<span class="bg-arrow w-8 h-6 mx-3 bg-no-repeat bg-cover inline-block"></span>
+							{toy.abilities.lv3_ability}
+						</p>
+					</li>
+				</ul>
+			</section>
+			<section class="flex flex-col gap-3 my-4">
+				<h2 class="font-sap text-3xl">Sprites</h2>
+				<ul class="flex flex-col gap-12 justify-start items-center sm:flex-row sm:ml-3">
+					<img class="h-40 border-seagull-700 border-2 rounded-xl p-2" src={toy.sprites.standard} title=`${toyName} Standard` alt=`SAP ${toyName} standard sprite` />
+					{
+						toy.sprites.classic
+							? <img class="h-40 border-seagull-700 border-2 rounded-xl p-2" src={toy.sprites.classic} title={`${toyName} Classic`} alt={`SAP ${toyName} classic sprite`} />
+							: null
+					}
+				</ul>
+			</section>
+			<section class="flex flex-col gap-3 my-4">
+				<h2 class="font-sap text-3xl">How to get it</h2>
+				<p  class="w-fit self-center text-xl sm:self-start sm:ml-3">
+					This toy can be obtained when buying the <strong class="font-sap tracking-wider">{snakeCaseToNormalText(toy.source.name)}</strong> pet.
+				</p>
+			</section>
+		</article>
+	</main>
+</Layout>

@@ -53,17 +53,12 @@ export type Model = Food | Pet | Pack | Token | Toy;
 export type Food = {
 	_id: string;
 	name: string;
-	shop_tier: ShopTier;
+	shop_tier: TierInfo;
 	sources: Source[];
 	effect: string;
 	perk: boolean;
 	sprites: Sprites;
 	price: number;
-}
-
-export type ShopTier = {
-	tier: PossibleTiers;
-	url: string;
 }
 
 export type Source = {
@@ -76,12 +71,12 @@ export type Pack = {
 	_id: string;
 	name: string;
 	sprite: string;
-	pets: Pets;
-	foods: Foods;
+	pets: PackPets;
+	foods: PackFoods;
 	description: string;
 }
 
-export type Foods = {
+export type PackFoods = {
 	tier_1_foods: GenericEntry[];
 	tier_2_foods: GenericEntry[];
 	tier_3_foods: GenericEntry[];
@@ -90,7 +85,7 @@ export type Foods = {
 	tier_6_foods: GenericEntry[];
 }
 
-export type Pets = {
+export type PackPets = {
 	tier_1_pets: GenericEntry[];
 	tier_2_pets: GenericEntry[];
 	tier_3_pets: GenericEntry[];
@@ -157,24 +152,13 @@ export type Toy = {
 	_id: string;
 	name: string;
 	tier_info: TierInfo;
-	source: Source;
+	source: GenericEntry;
 	ability_trigger: AbilityTrigger;
 	abilities: Abilities;
 	sprites: Sprites;
 }
 
-export type Abilities = {
-	lv1_ability: string;
-	lv2_ability: string;
-	lv3_ability: string;
-}
-
 export type AbilityTrigger = {
 	trigger: string;
-	url: string;
-}
-
-export type Source = {
-	name: string;
 	url: string;
 }
