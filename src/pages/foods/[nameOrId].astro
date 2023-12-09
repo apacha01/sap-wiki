@@ -1,6 +1,6 @@
 ---
 import Layout from '@layouts/Layout.astro';
-import { snakeCaseToNormalText } from '../../lib/utils';
+import { getWikiUriFromApiURL, snakeCaseToNormalText } from '../../lib/utils';
 import type { Food } from 'src/types';
 import { setError } from 'src/stores/errorStore';
 import { getFood } from 'src/lib/apiCalls';
@@ -69,8 +69,8 @@ const foodName = snakeCaseToNormalText(food.name);
 					{
 						food.sources.map(s => {
 							return (
-								<li class="flex pl-4 py-4 gap-4 text-xl sm:w-1/2 max-w-prose">
-									{s.source}
+								<li class="pl-4 py-4 text-xl sm:w-[45%] max-w-prose">
+									{s.source} <a href={getWikiUriFromApiURL(s.url)} class="bg-link bg-no-repeat bg-center aspect-square min-w-[1.5rem] inline-block ml-2"></a>
 								</li>
 							);
 						})

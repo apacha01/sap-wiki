@@ -1,6 +1,6 @@
 ---
 import Layout from '@layouts/Layout.astro';
-import { snakeCaseToNormalText } from '../../lib/utils';
+import { getWikiUriFromApiURL, snakeCaseToNormalText } from '../../lib/utils';
 import type { Toy } from 'src/types';
 import { setError } from 'src/stores/errorStore';
 import { getToy } from 'src/lib/apiCalls';
@@ -92,7 +92,7 @@ const trigger = snakeCaseToNormalText(toy.ability_trigger.trigger);
 			<section class="flex flex-col gap-3 my-4">
 				<h2 class="font-sap text-3xl">How to get it</h2>
 				<p  class="w-fit self-center text-xl sm:self-start sm:ml-3">
-					This toy can be obtained when buying the <strong class="font-sap tracking-wider">{snakeCaseToNormalText(toy.source.name)}</strong> pet.
+					This toy can be obtained when buying the <a href={getWikiUriFromApiURL(toy.source.url)} class="font-sap font-bold tracking-wider hover:underline underline-offset-4">{snakeCaseToNormalText(toy.source.name)}</a> pet.
 				</p>
 			</section>
 		</article>

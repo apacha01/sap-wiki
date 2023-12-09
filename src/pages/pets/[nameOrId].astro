@@ -1,6 +1,6 @@
 ---
 import Layout from '@layouts/Layout.astro';
-import { snakeCaseToNormalText } from '../../lib/utils';
+import { getWikiUriFromApiURL, snakeCaseToNormalText } from '../../lib/utils';
 import type { Pet } from 'src/types';
 import { setError } from 'src/stores/errorStore';
 import { getPet } from 'src/lib/apiCalls';
@@ -38,7 +38,15 @@ const petName = snakeCaseToNormalText(pet.name);
 				<div class="flex flex-col justify-around gap-16">
 					<p class="text-2xl">
 						The <strong>{petName}</strong> is a Tier {pet.tier_info.tier} pet that can be found in the
-						{pet.packs.map(p => p.name).join(', ')}
+						{
+							pet.packs.map((p, index) => (
+								<>
+									<a class="text-[1.55rem] text-seagull-200 hover:underline underline-offset-4" href={getWikiUriFromApiURL(p.url)}>{p.name}</a>
+									{index === pet.packs.length - 2 && ' & '}
+									{index < pet.packs.length - 2 && ', '}
+								</>
+							))
+						}
 						pack.
 					</p>
 					<ul class="self-start">

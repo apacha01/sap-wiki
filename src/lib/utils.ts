@@ -23,6 +23,6 @@ export const getStandardImageUrlFromApiURL = (url: string, name: string) => {
 
 export const getWikiUriFromApiURL = (url: string) => {
 	const model = getEndpointModel(url);
-	const id = url.slice(url.lastIndexOf('/'));
+	const id = url.slice(url.lastIndexOf('/') + 1);
 	return `/${model}/${id}`;
 };

@@ -1,6 +1,6 @@
 ---
 import Layout from '@layouts/Layout.astro';
-import { snakeCaseToNormalText } from '../../lib/utils';
+import { getWikiUriFromApiURL, snakeCaseToNormalText } from '../../lib/utils';
 import type { Token } from 'src/types';
 import { setError } from 'src/stores/errorStore';
 import { getToken } from 'src/lib/apiCalls';
@@ -154,7 +154,7 @@ const trigger = token.name.localeCompare('butterfly') === 0 ? 'Transformed' : to
 			<section class="flex flex-col gap-3 my-3">
 				<h2 class="font-sap text-3xl">This is token summoned from</h2>
 				<p class="text-xl mx-auto sm:ml-3">
-					{token.summoned_from.source}
+					{token.summoned_from.source} <a href={getWikiUriFromApiURL(token.summoned_from.url)} class="bg-link aspect-square w-6 inline-block ml-3"></a>
 				</p>
 			</section>
 			<section class="flex flex-col gap-3 my-3">
