@@ -77,11 +77,9 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 								<div class="flex gap-1">
 									{
 										[1, 2, 3, 4, 5, 6].map(n => (
-											<>
-												<button onClick={handleTierType} id={`tier-${n}-btn`} aria-label={`tier-${n}-button-filter`}>
-													<img class="aspect-square w-7" src={`/imgs/84px-Tier_${n}_Icon.png`} alt={`SAP Tier ${n} dice sprite`} />
-												</button>
-											</>
+											<button onClick={handleTierType} id={`tier-${n}-btn`} aria-label={`tier-${n}-button-filter`}>
+												<img class="aspect-square w-7" src={`/imgs/84px-Tier_${n}_Icon.png`} alt={`SAP Tier ${n} dice sprite`} />
+											</button>
 										))
 									}
 								</div>
@@ -101,11 +99,13 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 									id="sortAlpha-filter"
 									onChange={handleAlphaSortingOrderSelect}
 								>
-									{Object.keys(SORT_ALPHA).map(k =>
-										<option key={k} value={SORT_ALPHA[k as keyof typeof SORT_ALPHA]}>
-											{SORT_ALPHA[k as keyof typeof SORT_ALPHA]}
-										</option>
-									)}
+									{
+										Object.keys(SORT_ALPHA).map(k =>
+											<option key={k} value={SORT_ALPHA[k as keyof typeof SORT_ALPHA]}>
+												{SORT_ALPHA[k as keyof typeof SORT_ALPHA]}
+											</option>
+										)
+									}
 								</select>
 							</div>
 						)
@@ -123,11 +123,13 @@ export default function Filters({ name = true, sortAlpha = true, tier = true, so
 									id="sortTier-filter"
 									onChange={handleTierSortingOrderSelect}
 								>
-									{Object.keys(SORT_TIER).map(k =>
-										<option key={k} value={SORT_TIER[k as keyof typeof SORT_TIER]}>
-											{SORT_TIER[k as keyof typeof SORT_TIER]}
-										</option>
-									)}
+									{
+										Object.keys(SORT_TIER).map(k =>
+											<option key={k} value={SORT_TIER[k as keyof typeof SORT_TIER]}>
+												{SORT_TIER[k as keyof typeof SORT_TIER]}
+											</option>
+										)
+									}
 								</select>
 							</div>
 						)

@@ -61,7 +61,7 @@ const packName = snakeCaseToNormalText(pack.name);
 								[1,2,3,4,5,6].map(t => (
 									<tr class="bg-seagull-700 border-b border-seagull-950">
 										<td class="px-3 sm:px-6 py-4 font-medium text-seagull-50 whitespace-nowrap">
-											<img class="aspect-square w-16 sm:w-10" src={`/imgs/84px-Tier_${t}_Icon.png`} alt={`SAP Tier ${t} Sprite`} title={`SAP Tier ${t} Sprite`}>
+											<img class="aspect-square w-16 sm:w-10" src={`/imgs/84px-Tier_${t}_Icon.png`} alt={`SAP Tier ${t} Sprite`} title={`SAP Tier ${t} Sprite`} />
 										</td>
 										<td class="px-3 sm:px-6 py-4">
 											<div class="flex flex-wrap text-xl">
@@ -69,7 +69,7 @@ const packName = snakeCaseToNormalText(pack.name);
 													pack.pets[`tier_${t}_pets`].length > 1
 														? pack.pets[`tier_${t}_pets`].map(p => (
 															<a href={getWikiUriFromApiURL(p.url)}>
-																<img class="aspect-square w-16 sm:w-12" src={getStandardImageUrlFromApiURL(p.url, p.name)} alt={`SAP ${snakeCaseToNormalText(p.name)} Sprite`} title={snakeCaseToNormalText(p.name)}>
+																<img class="aspect-square w-16 sm:w-12" src={getStandardImageUrlFromApiURL(p.url, p.name)} alt={`SAP ${snakeCaseToNormalText(p.name)} Sprite`} title={snakeCaseToNormalText(p.name)} />
 															</a>
 														))
 														// special cases like custom or weekly packs
@@ -83,7 +83,7 @@ const packName = snakeCaseToNormalText(pack.name);
 													pack.foods[`tier_${t}_foods`].length > 1
 														? pack.foods[`tier_${t}_foods`].map(f => (
 															<a href={getWikiUriFromApiURL(f.url)}>
-																<img class="aspect-square w-16 sm:w-12" src={getStandardImageUrlFromApiURL(f.url, f.name)} alt={`SAP ${snakeCaseToNormalText(f.name)} Sprite`} title={snakeCaseToNormalText(f.name)}>
+																<img class="aspect-square w-16 sm:w-12" src={getStandardImageUrlFromApiURL(f.url, f.name)} alt={`SAP ${snakeCaseToNormalText(f.name)} Sprite`} title={snakeCaseToNormalText(f.name)} />
 															</a>
 														))
 														// special cases like custom or weekly packs
