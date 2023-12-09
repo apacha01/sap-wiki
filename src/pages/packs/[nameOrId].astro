@@ -1,0 +1,103 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { snakeCaseToNormalText, getStandardImageUrlFromApiURL, getWikiUriFromApiURL } from '../../lib/utils';
+import type { Pack } from 'src/types';
+import { setError } from 'src/stores/errorStore';
+import { getPack } from 'src/lib/apiCalls';
+
+export const prerender = false;
+
+let { nameOrId } = Astro.params;
+
+// if no name or id return to foods list
+if (nameOrId === undefined) {
+	return Astro.redirect('/foods');
+}
+
+const data = await getPack(nameOrId.toLowerCase()).catch(err => {
+	console.error(err);
+	setError(err);
+	return Astro.redirect('/error');
+});
+
+if ('documentationURL' in data) {
+	setError(data);
+	return Astro.redirect('/error');
+}
+
+const pack = data as Pack;
+const packName = snakeCaseToNormalText(pack.name);
+---
+
+<Layout title={packName}>
+	<main class="relative my-12 px-8 w-full">
+		<a href="/packs/" class="absolute top-0 left- bg-arrow rotate-180 aspect-square w-10"></a>
+		<h1 class="font-sap font-bold mb-12 text-center text-5xl text-sap-yellow-400 tracking-wider">{packName}</h1>
+		<article class="flex w-full flex-col gap-8">
+			<img class="w-64 border-seagull-700 border-2 rounded-xl p-6 mx-auto" src={pack.sprite} title={packName} alt={`SAP ${packName} sprite`} />
+			<section class="flex flex-col gap-3 my-3">
+				<h2 class="font-sap text-3xl">Description</h2>
+				<pre class="text-xl font-libsans whitespace-pre-wrap">{pack.description}</pre>
+			</section>
+			<section class="flex flex-col gap-3 my-3">
+				<h2 class="font-sap text-3xl">Pets & Foods included in the pack</h2>
+				<div class="relative overflow-x-auto rounded-lg mx-auto sm:ml-3 border border-seagull-950">
+					<table class="w-full text-sm text-left rtl:text-right text-seagull-50">
+						<thead class="font-sap text-xl text-seagull-50 uppercase bg-seagull-950">
+							<tr>
+								<th class="px-3 sm:px-6 py-3">
+									Tier
+								</th>
+								<th class="px-3 sm:px-6 py-3">
+									Pets
+								</th>
+								<th class="px-3 sm:px-6 py-3">
+									Foods
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								[1,2,3,4,5,6].map(t => (
+									<tr class="bg-seagull-700 border-b border-seagull-950">
+										<td class="px-3 sm:px-6 py-4 font-medium text-seagull-50 whitespace-nowrap">
+											<img class="aspect-square w-16 sm:w-10" src={`/imgs/84px-Tier_${t}_Icon.png`} alt={`SAP Tier ${t} Sprite`} title={`SAP Tier ${t} Sprite`}>
+										</td>
+										<td class="px-3 sm:px-6 py-4">
+											<div class="flex flex-wrap text-xl">
+												{
+													pack.pets[`tier_${t}_pets`].length > 1
+														? pack.pets[`tier_${t}_pets`].map(p => (
+															<a href={getWikiUriFromApiURL(p.url)}>
+																<img class="aspect-square w-16 sm:w-12" src={getStandardImageUrlFromApiURL(p.url, p.name)} alt={`SAP ${snakeCaseToNormalText(p.name)} Sprite`} title={snakeCaseToNormalText(p.name)}>
+															</a>
+														))
+														// special cases like custom or weekly packs
+														: snakeCaseToNormalText(pack.pets[`tier_${t}_pets`][0].name)
+												}
+											</div>
+										</td>
+										<td class="px-3 sm:px-6 py-4">
+											<div class="flex flex-wrap justify-end text-xl">
+												{
+													pack.foods[`tier_${t}_foods`].length > 1
+														? pack.foods[`tier_${t}_foods`].map(f => (
+															<a href={getWikiUriFromApiURL(f.url)}>
+																<img class="aspect-square w-16 sm:w-12" src={getStandardImageUrlFromApiURL(f.url, f.name)} alt={`SAP ${snakeCaseToNormalText(f.name)} Sprite`} title={snakeCaseToNormalText(f.name)}>
+															</a>
+														))
+														// special cases like custom or weekly packs
+														: snakeCaseToNormalText(pack.foods[`tier_${t}_foods`][0].name)
+												}
+											</div>
+										</td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+			</section>
+		</article>
+	</main>
+</Layout>
