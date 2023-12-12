@@ -19,11 +19,17 @@ export default {
 			'l3': 'url(/imgs/128px-Level3_Icon.png)',
 			'coin': 'url(/imgs/Coin.png)',
 			'clock': 'url(/imgs/Clock.png)',
+			'loader': 'url(/imgs/Loader.png)',
 			'pack': 'url(/imgs/Pack_Background.png)'
 		},
 		colors: {
 			...colors,
 			'cedar-wood-finish': '#641f00',
+			'sap-button': {
+				'DEFAULT': '#ff6a00',
+				'shadow': '#db5426',
+				'text': '#641f01',
+			},
 			'sap-yellow': {
 				'50': '#fffeea',
 				'100': '#fffac5',

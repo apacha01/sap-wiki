@@ -1,6 +1,6 @@
 import {
 	ALL_FOODS_ENDPOINT, ALL_PACKS_ENDPOINT, ALL_PETS_ENDPOINT, ALL_TOKENS_ENDPOINT, ALL_TOYS_ENDPOINT,
-	CUSTOM_FOOD_ENDPOINT, CUSTOM_PACK_ENDPOINT, CUSTOM_PET_ENDPOINT, CUSTOM_TOKEN_ENDPOINT, CUSTOM_TOY_ENDPOINT
+	CUSTOM_FOOD_ENDPOINT, CUSTOM_PACK_ENDPOINT, CUSTOM_PET_ENDPOINT, CUSTOM_TOKEN_ENDPOINT, CUSTOM_TOY_ENDPOINT, LOGIN_ENDPOINT
 } from 'src/constants/api';
 import type { API, Food, Pack, Pet, Token, Toy } from 'src/types';
 
@@ -42,4 +42,12 @@ export const getToken = async (nameOrId: string) => {
 
 export const getToy = async (nameOrId: string) => {
 	return await fetch(CUSTOM_TOY_ENDPOINT(nameOrId)).then(res => res.json()).then((res: API) => res.code === 200 ? res.content as Toy : res as API);
+};
+
+export const login = async (user: { name: string, password: string }) => {
+	return await fetch(LOGIN_ENDPOINT, {
+		headers: { 'Content-Type': 'application/json' },
+		method: 'POST',
+		body: JSON.stringify(user)
+	}).then(res => res.json()).then((res: API) => res.code === 200 ? {token: res.content.token, error: ''} : {token: '', error: res.description});
 };

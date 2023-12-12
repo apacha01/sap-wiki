@@ -1,0 +1,10 @@
+---
+import LoginForm from '@components/LoginForm';
+import Layout from '@layouts/Layout.astro';
+---
+
+<Layout title='Login'>
+	<main class="w-full my-auto px-10">
+		<LoginForm client:load></LoginForm>
+	</main>
+</Layout>
