@@ -1,6 +1,5 @@
 import { useState } from 'preact/hooks';
 import { login } from 'src/lib/apiCalls';
-import { setToken } from '../stores/loginStore.ts';
 
 export default function LoginForm() {
 	const [user, setUser] = useState<{ username: string, password: string }>({ username: '', password: '' });
@@ -35,7 +34,7 @@ export default function LoginForm() {
 						return;
 					}
 
-					setToken(res.token);
+					localStorage.setItem('token', res.token);
 					const base64Url = res.token.split('.')[1];
 					const base64 = base64Url.replace('-', '+').replace('_', '/');
 					const decodedPayload = JSON.parse(atob(base64));

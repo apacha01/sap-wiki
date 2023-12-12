@@ -1,0 +1,68 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { getAllPets } from 'src/lib/apiCalls';
+import { snakeCaseToNormalText } from 'src/lib/utils';
+import { setError } from 'src/stores/errorStore';
+import type { Pet } from 'src/types';
+
+export const prerender = false;
+
+const data = await getAllPets().catch(err => {
+	console.error(err);
+	setError(err);
+	return Astro.redirect('/error');
+});
+
+if ('documentationURL' in data) {
+	setError(data);
+	return Astro.redirect('/error');
+}
+
+const pets = data as Pet[];
+---
+
+<Layout title='Edit pets'>
+	<main class="w-full my-6">
+		<a href="/pets/create" class="bg-sap-button shadow-[inset_0px_-10px_0px] shadow-sap-button-shadow py-3 px-3 rounded-lg border-[3px] border-black text-3xl font-sap text-sap-button-text active:shadow-none active:translate-y-1 active:scale-y-95 mx-auto block w-fit my-3">Create New Pet</a>
+		<section>
+			<div class="relative overflow-x-auto rounded-lg mx-auto border border-seagull-950">
+				<table class="w-full text-sm text-left rtl:text-right text-seagull-50">
+					<thead class="font-sap text-xl text-seagull-50 uppercase bg-seagull-950">
+						<tr>
+							<th class="px-3 sm:px-6 py-3">
+							Pet
+							</th>
+							<th class="px-3 sm:px-6 py-3">
+							Actions
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{
+							pets.map(p => (
+								<tr class="bg-seagull-700 border-b border-seagull-950">
+									<td class="px-3 sm:px-6 py-4">
+										<div class="flex flex-wrap gap-3 text-xl items-center">
+											{
+												<img class="aspect-square w-16 sm:w-12"src={p.sprites.standard} alt={`SAP ${snakeCaseToNormalText(p.name)} Sprite`} title={snakeCaseToNormalText(p.name)} />
+												<p class="text-2xl font-libsans">{snakeCaseToNormalText(p.name)}</p>
+											}
+										</div>
+									</td>
+									<td class="px-3 sm:px-6 py-4">
+										<button class="bg-sap-button shadow-[inset_0px_-10px_0px] shadow-sap-button-shadow py-3 px-3 rounded-lg border-[3px] border-black text-xl font-sap text-sap-button-text active:shadow-none active:translate-y-1 active:scale-y-95 mr-4">
+											Edit
+										</button>
+										<button class="bg-sap-button shadow-[inset_0px_-10px_0px] shadow-sap-button-shadow py-3 px-3 rounded-lg border-[3px] border-black text-xl font-sap text-sap-button-text active:shadow-none active:translate-y-1 active:scale-y-95 mr-4">
+											Delete
+										</button>
+									</td>
+								</tr>
+							))
+						}
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</main>
+</Layout>

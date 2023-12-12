@@ -51,3 +51,13 @@ export const login = async (user: { name: string, password: string }) => {
 		body: JSON.stringify(user)
 	}).then(res => res.json()).then((res: API) => res.code === 200 ? {token: res.content.token, error: ''} : {token: '', error: res.description});
 };
+
+export const createPet = async (pet: Pet, token: string) => {
+	return await fetch(ALL_PETS_ENDPOINT, {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
+		body: JSON.stringify({ pet }) }
+	)
+		.then(res => res.json())
+		.then((res: API) => res.code === 201 ? res.content : res as API);
+};

@@ -1,0 +1,11 @@
+---
+import CreatePet from '@components/CreatePet';
+import Layout from '@layouts/Layout.astro';
+---
+
+<Layout title='Create Pet'>
+	<section class="w-full">
+		<CreatePet className='mx-auto flex flex-col gap-10 items-center my-10' client:load label='Create with JSON object'>
+		</CreatePet>
+	</section>
+</Layout>
