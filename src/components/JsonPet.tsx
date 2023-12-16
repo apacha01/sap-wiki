@@ -1,9 +1,10 @@
 import Ajv from 'ajv';
 import addFormat from 'ajv-formats';
 import { useState } from 'preact/hooks';
-import { createPet } from 'src/lib/apiCalls';
+import { createPet, updatePet } from 'src/lib/apiCalls';
+import type { Pet } from 'src/types';
 
-export default function CreatePetJson() {
+export default function CreatePetJson({ pet, create }: { pet?: Pet, create: boolean }) {
 	const [json, setJson] = useState('');
 	const [err, setErr] = useState('');
 	const [msg, setMsg] = useState('');
@@ -19,18 +20,33 @@ export default function CreatePetJson() {
 		if (await checkIfValidJson(json)) {
 			setLoading(true);
 
-			const res = await createPet(JSON.parse(json), localStorage.getItem('token')).finally(() => setLoading(false));
-			if ('documentationURL' in res) {
-				console.error(res);
-				setErr(res.description);
+			if (create) {
+				const res = await createPet(JSON.parse(json)).finally(() => setLoading(false));
+				if ('documentationURL' in res) {
+					console.error(res);
+					setErr(res.description);
+				}
+				else {
+					setMsg('CREATED!');
+				}
+			}
+			else if (!create && pet) {
+				console.log('in');
+				const res = await updatePet(JSON.parse(json), pet._id).finally(() => setLoading(false));
+				if ('documentationURL' in res) {
+					console.error(res);
+					setErr(res.description);
+				}
+				else {
+					setMsg('UPDATED!');
+				}
 			}
 			else {
-				setMsg('CREATED!');
-				console.log('all good');
+				setMsg('Not doing anything since no pet provided');
 			}
 		}
 		else {
-			console.error('error');
+			console.error('invalid pet');
 		}
 	};
 
@@ -59,6 +75,7 @@ export default function CreatePetJson() {
 	return (
 		<section class="w-full flex flex-col items-center">
 			<textarea class="max-w-full w-full h-[600px] bg-[#ccc] text-black text-xl p-3 rounded-lg border-4 border-black" name="json" id="json" placeholder="Your JSON here..." value={json} onInput={onInput}>
+				{pet ? JSON.stringify(pet, null, '\t') : null}
 			</textarea>
 			<pre class={`${!err ? 'hidden' : ''} text-red-400 font-libsans text-2xl font-bold mt-5`}>{err}</pre>
 			<pre class={`${!msg ? 'hidden' : ''} text-green-400 font-libsans text-2xl font-bold mt-5`}>{msg}</pre>
@@ -71,7 +88,7 @@ export default function CreatePetJson() {
 					)
 					: (
 						<button onClick={handleClick} class="bg-sap-button shadow-[inset_0px_-10px_0px] shadow-sap-button-shadow py-3 px-3 rounded-lg border-[3px] border-black text-3xl font-sap text-sap-button-text active:shadow-none active:translate-y-1 active:scale-y-95 mt-6 w-48">
-							Create
+							{create ? 'Create' : 'Edit'}
 						</button>
 					)
 			}

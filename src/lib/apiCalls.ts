@@ -62,6 +62,16 @@ export const createPet = async (pet: Pet) => {
 		.then((res: API) => res.code === 201 ? res.content : res as API);
 };
 
+export const updatePet = async (pet: Pet, petId: string) => {
+	return await fetch(CUSTOM_PET_ENDPOINT(petId), {
+		method: 'PUT',
+		headers: { 'Content-Type': 'application/json', 'x-auth-token': localStorage.getItem('token') ?? '' },
+		body: JSON.stringify({ pet }) }
+	)
+		.then(res => res.json())
+		.then((res: API) => res.code === 200 ? res.content : res as API);
+};
+
 export const deletePet = async (petId: string) => {
 	return await fetch(CUSTOM_PET_ENDPOINT(petId), {
 		method: 'DELETE',

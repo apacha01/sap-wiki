@@ -51,9 +51,9 @@ const pets = data as Pet[];
 										</div>
 									</td>
 									<td class="px-3 sm:px-6 py-4">
-										<button class="bg-sap-button shadow-[inset_0px_-10px_0px] shadow-sap-button-shadow py-3 px-3 rounded-lg border-[3px] border-black text-xl font-sap text-sap-button-text active:shadow-none active:translate-y-1 active:scale-y-95 mr-4">
+										<a href={`/pets/edit/${p._id}`} class="bg-sap-button shadow-[inset_0px_-10px_0px] shadow-sap-button-shadow py-3 px-3 rounded-lg border-[3px] border-black text-xl font-sap text-sap-button-text active:shadow-none active:translate-y-1 active:scale-y-95 mr-4">
 											Edit
-										</button>
+										</a>
 										<DeleteButton client:load id={p._id}></DeleteButton>
 									</td>
 								</tr>

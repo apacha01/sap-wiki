@@ -1,0 +1,36 @@
+---
+import InputPetInfo from '@components/InputPetInfo';
+import Layout from '@layouts/Layout.astro';
+import { getPet } from 'src/lib/apiCalls';
+import { setError } from 'src/stores/errorStore';
+import type { Pet } from 'src/types';
+
+export const prerender = false;
+
+let { nameOrId } = Astro.params;
+
+// if no name or id return to pets list
+if (nameOrId === undefined) {
+	return Astro.redirect('/pets');
+}
+
+const data = await getPet(nameOrId.toLowerCase()).catch(err => {
+	console.error(err);
+	setError(err);
+	return Astro.redirect('/error');
+});
+
+if ('documentationURL' in data) {
+	setError(data);
+	return Astro.redirect('/error');
+}
+
+const pet = data as Pet;
+---
+
+<Layout title='Edit Pet'>
+	<section class="w-full">
+		<InputPetInfo client:load create={false} pet={pet} className='mx-auto flex flex-col gap-10 items-center my-10' label='Create with JSON object'>
+		</InputPetInfo>
+	</section>
+</Layout>
