@@ -31,7 +31,6 @@ export default function CreatePetJson({ pet, create }: { pet?: Pet, create: bool
 				}
 			}
 			else if (!create && pet) {
-				console.log('in');
 				const res = await updatePet(JSON.parse(json), pet._id).finally(() => setLoading(false));
 				if ('documentationURL' in res) {
 					console.error(res);
