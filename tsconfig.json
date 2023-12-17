@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"baseUrl": "/home/apacha/Documents/sap-wiki",
+		"baseUrl": "./",
 		"paths": {
 			"@components/*": [
 				"src/components/*"
